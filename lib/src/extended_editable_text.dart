@@ -9,12 +9,12 @@ import 'dart:ui' as ui;
 import 'package:extended_text_field/src/extended_render_editable.dart';
 import 'package:extended_text_library/extended_text_library.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/gestures.dart' show DragStartBehavior;
 
 // The time it takes for the cursor to fade from fully opaque to fully
 // transparent and vice versa. A full cursor blink, from transparent to opaque
@@ -2510,43 +2510,43 @@ class ExtendedEditableTextState extends State<ExtendedEditableText>
       }
     }
 
-    if (_value.composing.isValid && !widget.readOnly) {
-      final TextStyle composingStyle = widget.style.merge(
-        const TextStyle(decoration: TextDecoration.underline),
-      );
-      final String beforeText = _value.composing.textBefore(_value.text);
-      final String insideText = _value.composing.textInside(_value.text);
-      final String afterText = _value.composing.textAfter(_value.text);
-
-      if (supportSpecialText) {
-        final TextSpan before = widget.specialTextSpanBuilder!
-            .build(beforeText, textStyle: widget.style);
-        final TextSpan after = widget.specialTextSpanBuilder!
-            .build(afterText, textStyle: widget.style);
-
-        final List<InlineSpan> children = <InlineSpan>[];
-
-        children.add(before);
-
-        children.add(TextSpan(
-          style: composingStyle,
-          text: insideText,
-        ));
-
-        children.add(after);
-
-        return TextSpan(style: widget.style, children: children);
-      }
-
-      return TextSpan(style: widget.style, children: <TextSpan>[
-        TextSpan(text: beforeText),
-        TextSpan(
-          style: composingStyle,
-          text: insideText,
-        ),
-        TextSpan(text: afterText),
-      ]);
-    }
+    // if (_value.composing.isValid && !widget.readOnly) {
+    //   final TextStyle composingStyle = widget.style.merge(
+    //     const TextStyle(decoration: TextDecoration.underline),
+    //   );
+    //   final String beforeText = _value.composing.textBefore(_value.text);
+    //   final String insideText = _value.composing.textInside(_value.text);
+    //   final String afterText = _value.composing.textAfter(_value.text);
+    //
+    //   if (supportSpecialText) {
+    //     final TextSpan before = widget.specialTextSpanBuilder!
+    //         .build(beforeText, textStyle: widget.style);
+    //     final TextSpan after = widget.specialTextSpanBuilder!
+    //         .build(afterText, textStyle: widget.style);
+    //
+    //     final List<InlineSpan> children = <InlineSpan>[];
+    //
+    //     children.add(before);
+    //
+    //     children.add(TextSpan(
+    //       style: composingStyle,
+    //       text: insideText,
+    //     ));
+    //
+    //     children.add(after);
+    //
+    //     return TextSpan(style: widget.style, children: children);
+    //   }
+    //
+    //   return TextSpan(style: widget.style, children: <TextSpan>[
+    //     TextSpan(text: beforeText),
+    //     TextSpan(
+    //       style: composingStyle,
+    //       text: insideText,
+    //     ),
+    //     TextSpan(text: afterText),
+    //   ]);
+    // }
 
     //final String text = _value.text;
 
