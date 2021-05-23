@@ -2328,10 +2328,7 @@ class ExtendedEditableTextState extends State<ExtendedEditableText>
     _selectionOverlay = null;
   }
 
-  @override
-  void hideToolbar() {
-    _selectionOverlay?.hide();
-  }
+
 
   /// Toggles the visibility of the toolbar.
   void toggleToolbar() {
@@ -2571,7 +2568,7 @@ class ExtendedEditableTextState extends State<ExtendedEditableText>
     // Read only mode should not paint text composing.
     return widget.controller.buildTextSpan(
       style: widget.style,
-      withComposing: !widget.readOnly,
+      withComposing: !widget.readOnly,context: context
     );
 
     //return TextSpan(style: widget.style, text: text);
@@ -2579,6 +2576,16 @@ class ExtendedEditableTextState extends State<ExtendedEditableText>
 
   void _updateForScroll() {
     _selectionOverlay?.updateForScroll();
+  }
+
+  @override
+  void userUpdateTextEditingValue(TextEditingValue value, SelectionChangedCause cause) {
+    // TODO: implement userUpdateTextEditingValue
+  }
+
+  @override
+  void hideToolbar([bool hideHandles = true]) {
+    _selectionOverlay?.hide();
   }
 }
 

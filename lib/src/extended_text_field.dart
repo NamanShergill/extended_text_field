@@ -1,10 +1,11 @@
 import 'dart:ui' as ui;
+
 import 'package:extended_text_field/src/extended_editable_text.dart';
 import 'package:extended_text_library/extended_text_library.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -1222,12 +1223,12 @@ class _ExtendedTextFieldState extends State<ExtendedTextField>
       ),
     );
 
-    if (kIsWeb) {
-      return Shortcuts(
-        shortcuts: scrollShortcutOverrides,
-        child: child,
-      );
-    }
+    // if (kIsWeb) {
+    //   return Shortcuts(
+    //     shortcuts: scrollShortcutOverrides,
+    //     child: child,
+    //   );
+    // }
     return child;
   }
 }
