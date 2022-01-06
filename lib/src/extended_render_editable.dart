@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 const double _kCaretGap = 1.0; // pixels
@@ -773,6 +772,7 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
   /// Controls how tall the selection highlight boxes are computed to be.
   ///
   /// See [ui.BoxHeightStyle] for details on available styles.
+  @override
   ui.BoxHeightStyle get selectionHeightStyle => _selectionHeightStyle;
   ui.BoxHeightStyle _selectionHeightStyle;
   set selectionHeightStyle(ui.BoxHeightStyle value) {
@@ -786,6 +786,7 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
   /// Controls how wide the selection highlight boxes are computed to be.
   ///
   /// See [ui.BoxWidthStyle] for details on available styles.
+  @override
   ui.BoxWidthStyle get selectionWidthStyle => _selectionWidthStyle;
   ui.BoxWidthStyle _selectionWidthStyle;
   set selectionWidthStyle(ui.BoxWidthStyle value) {
@@ -1140,8 +1141,11 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
 
       return <TextSelectionPoint>[TextSelectionPoint(start, null)];
     } else {
-      final List<ui.TextBox> boxes =
-          _textPainter.getBoxesForSelection(textPainterSelection);
+      final List<ui.TextBox> boxes = _textPainter.getBoxesForSelection(
+        textPainterSelection,
+        boxWidthStyle: selectionWidthStyle,
+        boxHeightStyle: selectionHeightStyle,
+      );
       final Offset start =
           Offset(boxes.first.start, boxes.first.bottom) + effectiveOffset;
       final Offset end =
@@ -1168,7 +1172,12 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
     layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
 
     final List<ui.TextBox> boxes = _textPainter.getBoxesForSelection(
-      TextSelection(baseOffset: range.start, extentOffset: range.end),
+      TextSelection(
+        baseOffset: range.start,
+        extentOffset: range.end,
+      ),
+      boxWidthStyle: selectionWidthStyle,
+      boxHeightStyle: selectionHeightStyle,
     );
 
     return boxes
@@ -1622,6 +1631,8 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
         baseOffset: _promptRectRange!.start,
         extentOffset: _promptRectRange!.end,
       ),
+      boxWidthStyle: selectionWidthStyle,
+      boxHeightStyle: selectionHeightStyle,
     );
 
     for (final TextBox box in boxes) {
@@ -1654,9 +1665,11 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
       _updateSelectionExtentsVisibility(effectiveOffset, actualSelection);
     }
     if (showSelection) {
-      _selectionRects ??= _textPainter.getBoxesForSelection(actualSelection!,
-          boxHeightStyle: _selectionHeightStyle,
-          boxWidthStyle: _selectionWidthStyle);
+      _selectionRects ??= _textPainter.getBoxesForSelection(
+        actualSelection!,
+        boxWidthStyle: selectionWidthStyle,
+        boxHeightStyle: selectionHeightStyle,
+      );
       paintSelection(context.canvas, effectiveOffset);
     }
 
@@ -1777,7 +1790,8 @@ class ExtendedRenderEditable extends ExtendedTextSelectionRenderObject {
 
   Offset getOffsetForCaret(TextPosition position, Rect caretPrototype) {
     assert(!debugNeedsLayout);
-    return _textPainter.getOffsetForCaret(position, caretPrototype);
+    return getCaretOffset(position, caretPrototype: caretPrototype);
+    //return _textPainter.getOffsetForCaret(position, caretPrototype);
   }
 
   @override

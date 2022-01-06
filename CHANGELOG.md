@@ -1,3 +1,20 @@
+# 9.0.3
+
+* Fix hittest is not right #131
+
+# 9.0.2
+
+* Fix selectionWidthStyle and selectionHeightStyle are not working.
+
+## 9.0.1
+
+* Support to use keyboard move cursor for SpecialInlineSpan. #135
+* Fix issue that backspace delete two chars. #141
+
+## 9.0.0
+
+* Migrate to 2.8
+
 ## 8.0.0
 
 * Add [SpecialTextSpan.mouseCursor], [SpecialTextSpan.onEnter] and [SpecialTextSpan.onExit].
