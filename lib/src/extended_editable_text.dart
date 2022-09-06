@@ -3198,6 +3198,11 @@ class ExtendedEditableTextState extends State<ExtendedEditableText>
       _textInputConnection!.setSelectionRects(rects);
     }
   }
+
+  @override
+  void performSelector(String selectorName) {
+    // TODO: implement performSelector
+  }
 }
 
 class _Editable extends MultiChildRenderObjectWidget {

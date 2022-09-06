@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison, always_put_control_body_on_new_line
 
 import 'dart:ui' as ui;
+
 import 'package:extended_text_field/src/extended_editable_text.dart';
 import 'package:extended_text_library/extended_text_library.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,6 @@ import 'package:flutter/services.dart';
 typedef InputCounterWidgetBuilder = Widget Function(
   /// The build context for the TextField
   BuildContext context, {
-
   /// The length of the string currently in the input.
   required int currentLength,
 
@@ -1400,37 +1400,34 @@ class ExtendedTextFieldState extends State<ExtendedTextField>
       semanticsMaxValueLength = null;
     }
 
-    return FocusTrapArea(
-      focusNode: focusNode,
-      child: MouseRegion(
-        cursor: effectiveMouseCursor,
-        onEnter: (PointerEnterEvent event) => _handleHover(true),
-        onExit: (PointerExitEvent event) => _handleHover(false),
-        child: IgnorePointer(
-          ignoring: !_isEnabled,
-          child: AnimatedBuilder(
-            animation: controller, // changes the _currentLength
-            builder: (BuildContext context, Widget? child) {
-              return Semantics(
-                maxValueLength: semanticsMaxValueLength,
-                currentValueLength: _currentLength,
-                onTap: widget.readOnly
-                    ? null
-                    : () {
-                        if (!_effectiveController.selection.isValid)
-                          _effectiveController.selection =
-                              TextSelection.collapsed(
-                                  offset: _effectiveController.text.length);
-                        _requestKeyboard();
-                      },
-                onDidGainAccessibilityFocus: handleDidGainAccessibilityFocus,
-                child: child,
-              );
-            },
-            child: _selectionGestureDetectorBuilder.buildGestureDetector(
-              behavior: HitTestBehavior.translucent,
+    return MouseRegion(
+      cursor: effectiveMouseCursor,
+      onEnter: (PointerEnterEvent event) => _handleHover(true),
+      onExit: (PointerExitEvent event) => _handleHover(false),
+      child: IgnorePointer(
+        ignoring: !_isEnabled,
+        child: AnimatedBuilder(
+          animation: controller, // changes the _currentLength
+          builder: (BuildContext context, Widget? child) {
+            return Semantics(
+              maxValueLength: semanticsMaxValueLength,
+              currentValueLength: _currentLength,
+              onTap: widget.readOnly
+                  ? null
+                  : () {
+                      if (!_effectiveController.selection.isValid)
+                        _effectiveController.selection =
+                            TextSelection.collapsed(
+                                offset: _effectiveController.text.length);
+                      _requestKeyboard();
+                    },
+              onDidGainAccessibilityFocus: handleDidGainAccessibilityFocus,
               child: child,
-            ),
+            );
+          },
+          child: _selectionGestureDetectorBuilder.buildGestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: child,
           ),
         ),
       ),
