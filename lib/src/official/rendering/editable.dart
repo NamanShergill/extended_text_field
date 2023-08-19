@@ -2277,8 +2277,7 @@ class _RenderEditable extends RenderBox
 
   bool _canComputeDryLayoutForInlineWidgets() {
     return text?.visitChildren((InlineSpan span) {
-          return (span is! PlaceholderSpan) ||
-              switch (span.alignment) {
+          return  (span is! PlaceholderSpan) || switch (span.alignment) {
                 ui.PlaceholderAlignment.baseline ||
                 ui.PlaceholderAlignment.aboveBaseline ||
                 ui.PlaceholderAlignment.belowBaseline =>

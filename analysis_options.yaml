@@ -19,12 +19,15 @@
 # Android Studio, and the `flutter analyze` command.
 
 analyzer:
+  exclude:
+    - example/**
   errors:
     # treat missing required parameters as a warning (not a hint)
     missing_required_param: warning
     # treat missing returns as a warning (not a hint)
     missing_return: warning
     # allow having TODOs in the code
+    switch_case_completes_normally: warning
     todo: ignore
     # Ignore analyzer hints for updating pubspecs when using Future or
     # Stream and not importing dart:async
